@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block 'bienvenida' %}
+<div class="text-center mt-5">
+  <h1>Bienvenido, {{ nombre }}</h1>
+    <h3>¡Gracias por iniciar sesión en nuestro sitio!</p>
+      <h4>¡Estos son los postres de la casa hechos especialmente para ti!</h4>
+</div>
+{% endblock %}
+
+      <!-- inicio seccion cartas -->
+      {% block 'libros' %}
+      <section class="container bg-light" id="productos">
+        <h2 class=" text-center fw-bold pt-3 pb-4">Libros</h2>
+        <div class="row">
+          <!-- cartas -->
+          {% for libro in libros %}
+          <div class="col-sm-4 col-12 px-5 mb-4">
+            <a href="{% url 'detalle_libro' libro.libros_id %}" class="text-decoration-none"></a>
+            <div class="card">
+              <img src="{{ libro.portada_url}}" class="card-img-top" alt="" />
+              <div class="card-body">
+                <h5 class="card-title fw-bold">{{libro.titulo}}</h5>
+                <p class="card-text">{{libro.autores_id.nombre}}</p>
+                <a href="{% url 'detalle_libro' libro_id=libro.libros_id %}" class="btn btn-primary">Ver Detalles</a>
+              </div>
+            </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+      {% endblock %}
+      <!-- Fin de seccion cartas -->
+    

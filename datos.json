@@ -1,0 +1,352 @@
+[
+    {
+      "model": "resenas_app.autores",
+      "pk": 1,
+      "fields": {
+        "nombre": "Gabriel García Márquez"
+      }
+    },
+    {
+      "model": "resenas_app.autores",
+      "pk": 2,
+      "fields": {
+        "nombre": "J.K. Rowling"
+      }
+    },
+    {
+      "model": "resenas_app.autores",
+      "pk": 3,
+      "fields": {
+        "nombre": "Haruki Murakami"
+      }
+    },
+    {
+      "model": "resenas_app.autores",
+      "pk": 4,
+      "fields": {
+        "nombre": "Stephen King"
+      }
+    },
+    {
+      "model": "resenas_app.autores",
+      "pk": 5,
+      "fields": {
+        "nombre": "Agatha Christie"
+      }
+    },
+    {
+      "model": "resenas_app.autores",
+      "pk": 6,
+      "fields": {
+        "nombre": "George Orwell"
+      }
+    },
+    {
+      "model": "resenas_app.autores",
+      "pk": 7,
+      "fields": {
+        "nombre": "Jane Austen"
+      }
+    },
+    {
+      "model": "resenas_app.autores",
+      "pk": 8,
+      "fields": {
+        "nombre": "Mark Twain"
+      }
+    },
+    {
+      "model": "resenas_app.genero",
+      "pk": 1,
+      "fields": {
+        "nombre": "Novela"
+      }
+    },
+    {
+      "model": "resenas_app.genero",
+      "pk": 2,
+      "fields": {
+        "nombre": "Fantasía"
+      }
+    },
+    {
+      "model": "resenas_app.genero",
+      "pk": 3,
+      "fields": {
+        "nombre": "Ciencia Ficción"
+      }
+    },
+    {
+      "model": "resenas_app.genero",
+      "pk": 4,
+      "fields": {
+        "nombre": "Misterio"
+      }
+    },
+    {
+      "model": "resenas_app.genero",
+      "pk": 5,
+      "fields": {
+        "nombre": "Romance"
+      }
+    },
+    {
+      "model": "resenas_app.libros",
+      "pk": 1,
+      "fields": {
+        "titulo": "Cien años de soledad",
+        "descripcion": "Una obra maestra de la literatura latinoamericana.",
+        "año_publicacion": 1967,
+        "portada_url": "https://images.cdn3.buscalibre.com/fit-in/360x360/61/8d/618d227e8967274cd9589a549adff52d.jpg",
+        "genero_id": 1,
+        "autores_id": 1
+      }
+    },
+    {
+      "model": "resenas_app.libros",
+      "pk": 2,
+      "fields": {
+        "titulo": "Harry Potter y la piedra filosofal",
+        "descripcion": "El primer libro de la famosa saga de Harry Potter.",
+        "año_publicacion": 1997,
+        "portada_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSGlWquPhzTJYnntEbiZxKSQOH2R1kIoEez9E8ILweDgMm-4EmmlQlSX8L14JANlC4RnzqXDWjo5DZjVGilBH2tEx2Gd5OEoCTSvd6W3ZEyVg4iu_OTvSkd&usqp=CAc",
+        "genero_id": 2,
+        "autores_id": 2
+      }
+    },
+    {
+      "model": "resenas_app.libros",
+      "pk": 3,
+      "fields": {
+        "titulo": "Norwegian Wood",
+        "descripcion": "Una novela de Haruki Murakami sobre la juventud y el amor.",
+        "año_publicacion": 1987,
+        "portada_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfNQ8Hx2Sc9oYD00YMeuJZTeTJcz9hXquLfA&s",
+        "genero_id": 1,
+        "autores_id": 3
+      }
+    },
+    {
+      "model": "resenas_app.libros",
+      "pk": 4,
+      "fields": {
+        "titulo": "It",
+        "descripcion": "Un libro de Stephen King sobre un payaso aterrador.",
+        "año_publicacion": 1986,
+        "portada_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1b_9tp_8l3yPEM3wyc7UPS6xp8nX181VwJA&s",
+        "genero_id": 4,
+        "autores_id": 4
+      }
+    },
+    {
+      "model": "resenas_app.libros",
+      "pk": 5,
+      "fields": {
+        "titulo": "Asesinato en el Orient Express",
+        "descripcion": "Una de las más famosas novelas de misterio de Agatha Christie.",
+        "año_publicacion": 1934,
+        "portada_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtcMLH0b-MO44g26zGVedXjTDbQeLdpx9b6A&s",
+        "genero_id": 4,
+        "autores_id": 5
+      }
+    },
+    {
+      "model": "resenas_app.libros",
+      "pk": 6,
+      "fields": {
+        "titulo": "1984",
+        "descripcion": "Una novela distópica de George Orwell.",
+        "año_publicacion": 1949,
+        "portada_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTj61Vi-GluuUwAlJ_m1iUJb2rCgWHVeY81nzVdbEqLtJm5DerMLz7tqbE4P0xAAv8KAyVgYtA_vCqFa-6PQL6nBXMPZiVfbbQtC4Y2KvE&usqp=CAc",
+        "genero_id": 3,
+        "autores_id": 6
+      }
+    },
+    {
+      "model": "resenas_app.libros",
+      "pk": 7,
+      "fields": {
+        "titulo": "Orgullo y prejuicio",
+        "descripcion": "Una novela romántica de Jane Austen.",
+        "año_publicacion": 1813,
+        "portada_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuJ51xwaNFTs_csVNqvll9GtCX_iRBBIxc6g&s",
+        "genero_id": 5,
+        "autores_id": 7
+      }
+    },
+    {
+      "model": "resenas_app.libros",
+      "pk": 8,
+      "fields": {
+        "titulo": "Las aventuras de Tom Sawyer",
+        "descripcion": "Una novela clásica de Mark Twain.",
+        "año_publicacion": 1876,
+        "portada_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT4LYiqEXtwce_OZmOtrpI_z-dcx4Iu1gaI9twvgnCdODfN5WMmfPNy6c0KPzcRHZ1LNDByxqDyPJ9ekQbjm7J1-M1cRu4DTfbnf1NNq70T&usqp=CAc",
+        "genero_id": 1,
+        "autores_id": 8
+      }
+    },
+    {
+      "model": "resenas_app.usuarios",
+      "pk": 1,
+      "fields": {
+        "nombre": "Usuario1",
+        "email": "usuario1@mail.com",
+        "password": "abc123",
+        "tipo_usuario": "Lector"
+      }
+    },
+    {
+      "model": "resenas_app.usuarios",
+      "pk": 2,
+      "fields": {
+        "nombre": "Usuario2",
+        "email": "usuario2@mail.com",
+        "password": "abc1234",
+        "tipo_usuario": "Lector"
+      }
+    },
+    {
+      "model": "resenas_app.usuarios",
+      "pk": 3,
+      "fields": {
+        "nombre": "Usuario03",
+        "email": "usuario03@mail.com",
+        "password": "abc12345",
+        "tipo_usuario": "Administrador"
+      }
+    },
+    {
+      "model": "resenas_app.reseñas",
+      "pk": 1,
+      "fields": {
+        "libro_id": 1,
+        "usuario_id": 1,
+        "calificacion": 5,
+        "comentario": "Una obra maestra que todo el mundo debería leer."
+        
+      }
+    },
+    {
+      "model": "resenas_app.reseñas",
+      "pk": 2,
+      "fields": {
+        "libro_id": 1,
+        "usuario_id": 2,
+        "calificacion": 4,
+        "comentario": "Me encantó la narrativa y los personajes."
+        
+      }
+    },
+    {
+        "model": "resenas_app.reseñas",
+        "pk": 3,
+        "fields": {
+          "libro_id": 3,
+          "usuario_id": 2,
+          "calificacion": 5,
+          "comentario": "Un libro que me hizo reflexionar sobre la vida."
+          
+        }
+      },
+      {
+        "model": "resenas_app.reseñas",
+        "pk": 4,
+        "fields": {
+          "libro_id": 4,
+          "usuario_id": 1,
+          "calificacion": 4,
+          "comentario": "Me mantuvo en suspenso todo el tiempo, excelente libro."
+          
+        }
+      },
+      {
+        "model": "resenas_app.reseñas",
+        "pk": 5,
+        "fields": {
+          "libro_id": 4,
+          "usuario_id": 2,
+          "calificacion": 5,
+          "comentario": "Un libro que te hace temer al payaso."
+          
+        }
+      },
+      {
+        "model": "resenas_app.reseñas",
+        "pk": 6,
+        "fields": {
+          "libro_id": 5,
+          "usuario_id": 1,
+          "calificacion": 5,
+          "comentario": "Un misterio intrigante que me mantuvo adivinando hasta el final."
+          
+        }
+      },
+      {
+        "model": "resenas_app.reseñas",
+        "pk": 7,
+        "fields": {
+          "libro_id": 5,
+          "usuario_id": 2,
+          "calificacion": 4,
+          "comentario": "Una obra clásica con un final sorprendente."
+          
+        }
+      },
+      {
+        "model": "resenas_app.reseñas",
+        "pk": 8,
+        "fields": {
+          "libro_id": 6,
+          "usuario_id": 1,
+          "calificacion": 4,
+          "comentario": "Una distopía que te hace reflexionar sobre el poder."
+          
+        }
+      },
+      {
+        "model": "resenas_app.reseñas",
+        "pk": 9,
+        "fields": {
+          "libro_id": 6,
+          "usuario_id": 2,
+          "calificacion": 5,
+          "comentario": "Me encantó la atmósfera y la visión del futuro del autor."
+          
+        }
+      },
+      {
+        "model": "resenas_app.reseñas",
+        "pk": 10,
+        "fields": {
+          "libro_id": 7,
+          "usuario_id": 1,
+          "calificacion": 5,
+          "comentario": "Una historia romántica con personajes entrañables."
+          
+        }
+      },
+      {
+        "model": "resenas_app.reseñas",
+        "pk": 11,
+        "fields": {
+          "libro_id": 7,
+          "usuario_id": 2,
+          "calificacion": 4,
+          "comentario": "Me hizo sentir como si estuviera viviendo en esa época."
+          
+        }
+      },
+      {
+        "model": "resenas_app.reseñas",
+        "pk": 12,
+        "fields": {
+          "libro_id": 8,
+          "usuario_id": 1,
+          "calificacion": 4,
+          "comentario": "Una aventura emocionante que capturó mi imaginación."
+          
+        }
+      }
+  ]
+  
