@@ -22,7 +22,7 @@ from resenas_app.views import index, registro_exitoso, registro_usuario, libros,
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path('registro_usuario', registro_usuario, name='registro_usuario'),
+    path('registro_usuario/', registro_usuario, name='registro_usuario'),
     path('registro_exitoso', registro_exitoso, name='registro_exitoso'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('libros/', libros, name='libros'),

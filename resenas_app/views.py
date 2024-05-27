@@ -15,7 +15,7 @@ def registro_usuario(request):
         form = RegistroUsuarioForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('libros.html')
+            return redirect('registro_exitoso') 
     else:
         form = RegistroUsuarioForm()
     
@@ -27,7 +27,7 @@ def registro_exitoso(request):
 
 @login_required
 def libros(request):
-    nombre = request.user.username
+    nombre = request.user.nombre
     
     # Obtén todos los libros
     libros = Libros.objects.all()
@@ -101,7 +101,6 @@ def agregar_resena(request, libro_id):
             calificacion = form.cleaned_data['calificacion']
             comentario = form.cleaned_data['comentario']
             usuario = request.user  # Usar el usuario autenticado
-            usuario = Usuarios.objects.get(usuarios_id=request.user.id)  # Obtener el usuario actual
             Reseñas.objects.create(libro_id=libro, usuario_id=usuario, calificacion=calificacion, comentario=comentario)
             return redirect('detalle_libro', libro_id=libro_id)
     else:
@@ -116,17 +115,21 @@ def agregar_resena(request, libro_id):
 
 @login_required
 def actividades_usuario(request):
-    usuario = request.user  # Usar el usuario autenticado
-    
-    # Obtener las reseñas del usuario ordenados por fecha descendente
-    reseñas_usuario = Reseñas.objects.filter(usuario_id= usuario).order_by('-fecha_reseña')
-    # Obtener los comentarios del usuario ordenados por fecha descendente
-    comentarios_usuario = ComentarioReseña.objects.filter(usuario_id=usuario).order_by('-fecha_comentario')
-    context = {
+    if request.user.is_authenticated:
+        # Obtener el usuario autenticado
+        usuario = get_object_or_404(Usuarios, usuarios_id=request.user.usuarios_id)
+
+        # Obtener las reseñas y comentarios del usuario
+        reseñas_usuario = Reseñas.objects.filter(usuario_id=usuario)
+        comentarios_usuario = ComentarioReseña.objects.filter(usuario=usuario)
+    else:
+        usuario = None
+        reseñas_usuario = []
+        comentarios_usuario = []
+
+    # Renderizar la plantilla con el contexto
+    return render(request, 'actividades_usuario.html', {
         'usuario': usuario,
         'reseñas_usuario': reseñas_usuario,
-        'comentarios_usuario': comentarios_usuario,
-    }
-    return render(request, 'actividades_usuario.html', context)
-
-
+        'comentarios_usuario': comentarios_usuario
+    })
