@@ -1,35 +1,68 @@
 {% extends 'base.html' %}
 
-{% block 'bienvenida' %}
+{% block 'libros' %}
 <div class="text-center mt-5">
-  <h1>Bienvenido, {{ nombre }}</h1>
-    <h3>¡Gracias por iniciar sesión en nuestro sitio!</p>
-      <h4>¡Estos son los postres de la casa hechos especialmente para ti!</h4>
+    <h1>Bienvenido, {{ nombre }}</h1>
+    <h3>¡Gracias por iniciar sesión en nuestro sitio!</h3>
+    <h4>¡Estos son los postres de la casa hechos especialmente para ti!</h4>
 </div>
-{% endblock %}
 
-      <!-- inicio seccion cartas -->
-      {% block 'libros' %}
-      <section class="container bg-light" id="productos">
-        <h2 class=" text-center fw-bold pt-3 pb-4">Libros</h2>
-        <div class="row">
-          <!-- cartas -->
-          {% for libro in libros %}
-          <div class="col-sm-4 col-12 px-5 mb-4">
+<!-- Formulario de filtro -->
+<form method="GET">
+  <div class="form-group">
+      <label for="genero">Filtrar por género:</label>
+      <select name="genero" class="form-control">
+          <option value="">Todos los géneros</option>
+          {% for genero in generos %}
+              <option value="{{ genero.genero_id }}" {% if genero_actual == genero.genero_id %}selected{% endif %}>{{ genero.nombre }}</option>
+          {% endfor %}
+      </select>
+  </div>
+  
+  <div class="form-group">
+      <label for="autor">Filtrar por autor:</label>
+      <select name="autor" class="form-control">
+          <option value="">Todos los autores</option>
+          {% for autor in autores %}
+              <option value="{{ autor.autores_id }}" {% if autor_actual == autor.autores_id %}selected{% endif %}>{{ autor.nombre }}</option>
+          {% endfor %}
+      </select>
+  </div>
+  
+  <div class="form-group">
+      <label for="calificacion">Filtrar por calificación:</label>
+      <select name="calificacion" class="form-control">
+          <option value="">Todas las calificaciones</option>
+          <option value="1" {% if calificacion_actual == "1" %}selected{% endif %}>1</option>
+          <option value="2" {% if calificacion_actual == "2" %}selected{% endif %}>2</option>
+          <option value="3" {% if calificacion_actual == "3" %}selected{% endif %}>3</option>
+          <option value="4" {% if calificacion_actual == "4" %}selected{% endif %}>4</option>
+          <option value="5" {% if calificacion_actual == "5" %}selected{% endif %}>5</option>
+      </select>
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>
+<!-- Listado de libros -->
+<section class="container bg-light" id="productos">
+    <h2 class="text-center fw-bold pt-3 pb-4">Libros</h2>
+    <div class="row">
+        <!-- cartas -->
+        {% for libro in libros %}
+        <div class="col-sm-4 col-12 px-5 mb-4">
             <a href="{% url 'detalle_libro' libro.libros_id %}" class="text-decoration-none"></a>
             <div class="card">
-              <img src="{{ libro.portada_url}}" class="card-img-top" alt="" />
-              <div class="card-body">
-                <h5 class="card-title fw-bold">{{libro.titulo}}</h5>
-                <p class="card-text">{{libro.autores_id.nombre}}</p>
-                <a href="{% url 'detalle_libro' libro_id=libro.libros_id %}" class="btn btn-primary">Ver Detalles</a>
-              </div>
+                <img src="{{ libro.portada_url }}" class="card-img-top" alt="" />
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ libro.titulo }}</h5>
+                    <p class="card-text">{{ libro.autores_id.nombre }}</p>
+                    <a href="{% url 'detalle_libro' libro_id=libro.libros_id %}" class="btn btn-primary">Ver Detalles</a>
+                </div>
             </div>
             </a>
-          </div>
-          {% endfor %}
         </div>
-      </section>
-      {% endblock %}
-      <!-- Fin de seccion cartas -->
-    
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+

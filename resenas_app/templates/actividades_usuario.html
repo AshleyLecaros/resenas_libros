@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block actividades %}
+<h1>Actividades de {{ usuario.nombre }}</h1>
+
+<h2>Reseñas realizadas</h2>
+<ul>
+  {% for reseña in reseñas_usuario %}
+    <li>Calificación: {{ reseña.calificacion }} - Comentario: {{ reseña.comentario }} - Fecha: {{ reseña.fecha_reseña }}</li>
+  {% empty %}
+    <li>No hay reseñas realizadas por este usuario.</li>
+  {% endfor %}
+</ul>
+
+<h2>Comentarios realizados</h2>
+<ul>
+  {% for comentario in comentarios_usuario %}
+    <li>{{ comentario.comentario }} - Fecha: {{ comentario.fecha_comentario }}</li>
+  {% empty %}
+    <li>No hay comentarios realizados por este usuario.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
+

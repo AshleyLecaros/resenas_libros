@@ -11,33 +11,60 @@
             <h2>Autor: {{ libro.autores_id.nombre }}</h2>
             <p><strong>Año de Publicación:</strong> {{ libro.año_publicacion }}</p>
             <p><strong>Género:</strong> {{ libro.genero_id.nombre }}</p>
+            <p><strong>Promedio de Calificación:</strong> {{ promedio_calificaciones }}</p>
             <p>{{ libro.descripcion }}</p>
             
             <h3>Reseñas</h3>
-                        {% if reseñas %}
-                            <ul>
-                                {% for reseña in reseñas %}
-                                    <li>
-                                        <p><strong>Usuario:</strong> {{ reseña.usuario.nombre }}</p>
-                                        <p><strong>Calificación:</strong> {{ reseña.calificacion }}</p>
-                                        <p><strong>Comentario:</strong> {{ reseña.comentario }}</p>
-                                        <p><strong>Fecha:</strong> {{ reseña.fecha_reseña }}</p>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>No hay reseñas para este libro.</p>
-                        {% endif %}
-        </div>
-    </div>
-</div>
+            {% if reseñas %}
+                <ul class="list-unstyled">
+                    {% for reseña in reseñas %}
+                        <li class="mb-4 border p-3">
+                            <!-- Nombre del usuario -->
+                            <div class="mb-2">
+                                {{ reseña.usuario_id.nombre }}: {{ reseña.comentario }}
+                                <span class="text-muted">- {{ reseña.fecha_reseña|date:"F j, Y, g:i a" }}</span>
+                            </div>
+                            
+                            <!-- Botón desplegable para agregar comentario -->
+                            <button class="btn btn-link text-decoration-none btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentar-{{ reseña.reseña_id }}" aria-expanded="false" aria-controls="comentar-{{ reseña.reseña_id }}">
+                                Comentar
+                            </button>
 
+                            <!-- Formulario para agregar comentario -->
+                            <div class="collapse mt-3" id="comentar-{{ reseña.reseña_id }}">
+                                <form method="post" action="{% url 'detalle_libro' libro_id=libro.libros_id %}">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <input type="hidden" name="reseña_id" value="{{ reseña.reseña_id }}">
+                                    <button type="submit" class="btn btn-primary btn-sm mt-2">Guardar Comentario</button>
+                                </form>
+                            </div>
+
+                            <!-- Botón desplegable para ver comentarios -->
+                            <button class="btn btn-link text-decoration-none btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#comentarios-{{ reseña.reseña_id }}" aria-expanded="false" aria-controls="comentarios-{{ reseña.reseña_id }}">
+                                Ver Comentarios
+                            </button>
+
+                            <!-- Lista de comentarios -->
+                            <div class="collapse mt-3" id="comentarios-{{ reseña.reseña_id }}">
+                                {% for comentario in reseña.comentarios.all %}
+                                    <!-- Estilo del comentario -->
+                                    <div class="comentario mb-2 border-start border-primary ps-2">
+                                        {{ comentario }}
+                                        <span class="text-muted">- {{ comentario.fecha_comentario|date:"F j, Y, g:i a" }}</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay reseñas para este libro.</p>
+            {% endif %}
             
             <!-- Enlace para agregar reseña -->
-            <a href="{% url 'agregar_resena' libro_id=libro.libros_id %}" class="btn btn-primary">Agregar Reseña</a>
+            <a href="{% url 'agregar_resena' libro_id=libro.libros_id %}" class="btn btn-primary mt-3">Agregar Reseña</a>
         </div>
     </div>
 </div>
 {% endblock %}
-
-

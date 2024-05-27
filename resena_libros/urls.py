@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
-from resenas_app.views import index, registro_exitoso, registro_usuario, libros, detalle_libro, agregar_resena
+from resenas_app.views import index, registro_exitoso, registro_usuario, libros, detalle_libro, agregar_resena, actividades_usuario
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +27,8 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('libros/', libros, name='libros'),
     path('libros/<int:libro_id>/', detalle_libro, name='detalle_libro'),
-    path('libros/<int:libro_id>/', agregar_resena, name='agregar_resena'),
+    path('libros/<int:libro_id>/agregar_resena/', agregar_resena, name='agregar_resena'),
+     path('actividades/', actividades_usuario, name='actividades_usuario'),
     
     
     

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Usuarios, Reseñas
+from .models import Usuarios, Reseñas, ComentarioReseña
 
 class RegistroUsuarioForm(forms.ModelForm):
     class Meta:
@@ -18,7 +18,10 @@ class ReseñaForm(forms.ModelForm):
     class Meta:
         model = Reseñas
         fields = ['calificacion', 'comentario']
-        labels = {
-            'calificacion': 'Calificación',
-            'comentario': 'Comentario',
-        }
+        
+        
+class ComentarioReseñaForm(forms.ModelForm):
+    class Meta:
+        model = ComentarioReseña
+        fields = ['comentario']
+        

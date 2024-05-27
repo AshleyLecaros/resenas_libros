@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RegistroUsuarioForm, ReseñaForm
+from .forms import RegistroUsuarioForm, ReseñaForm, ComentarioReseñaForm
 from django.contrib.auth.decorators import login_required
-from .models import Libros, Reseñas
+from .models import Libros, Reseñas, Usuarios, ComentarioReseña, Genero,Autores
 
 
 # Create your views here.
@@ -28,25 +28,70 @@ def registro_exitoso(request):
 @login_required
 def libros(request):
     nombre = request.user.username
-    libros = Libros.objects.all()  # Obtén todos los libros
-
+    
+    # Obtén todos los libros
+    libros = Libros.objects.all()
+    
+    # Obtén todos los géneros y autores
+    generos = Genero.objects.all()
+    autores = Autores.objects.all()
+    
+    # Filtrar por categoría
+    genero_id = request.GET.get('genero')
+    if genero_id:
+        libros = Libros.objects.filter(genero_id=genero_id)
+    
+    # Filtrar por autor
+    autor_id = request.GET.get('autor')
+    if autor_id:
+        libros = Libros.objects.filter(autores_id=autor_id)
+    
+    # Filtrar por calificación
+    calificacion = request.GET.get('calificacion')
+    if calificacion:
+        libros = Libros.objects.filter(reseñas__calificacion=calificacion)
+    
     context = {
         'nombre': nombre,
         'libros': libros,
+        'generos': generos,
+        'autores': autores,
     }
     return render(request, 'libros.html', context)
 
 
 # Vista para el detalle del libro
+@login_required
 def detalle_libro(request, libro_id):
     libro = get_object_or_404(Libros, libros_id=libro_id)
-    reseñas = libro.reseñas.all()
+    reseñas = Reseñas.objects.filter(libro_id=libro)
+    promedio_calificaciones = libro.promedio_calificaciones()
+
+    # Formulario de comentario vacío para cada reseña
+    comentario_form = ComentarioReseñaForm()
+
+    if request.method == 'POST':
+        form = ComentarioReseñaForm(request.POST)
+        if form.is_valid():
+            comentario = form.cleaned_data['comentario']
+            usuario = request.user  # Usar el usuario autenticado
+            usuario = Usuarios.objects.get(pk=request.user.pk)  # Obtener el usuario actual
+            reseña_id = request.POST.get('reseña_id')
+            reseña = get_object_or_404(Reseñas, reseña_id=reseña_id)
+            ComentarioReseña.objects.create(reseña=reseña, usuario=usuario, comentario=comentario)
+            return redirect('detalle_libro', libro_id=libro_id)
+    else:
+        form = ComentarioReseñaForm()
+
     context = {
         'libro': libro,
-        'reseñas': reseñas
+        'reseñas': reseñas,
+        'form': comentario_form,
+        'promedio_calificaciones': promedio_calificaciones,
     }
     return render(request, 'detalle_libro.html', context)
 
+@login_required
 def agregar_resena(request, libro_id):
     libro = get_object_or_404(Libros, libros_id=libro_id)
 
@@ -55,13 +100,33 @@ def agregar_resena(request, libro_id):
         if form.is_valid():
             calificacion = form.cleaned_data['calificacion']
             comentario = form.cleaned_data['comentario']
-            usuario = request.user  # Asumiendo que tienes un sistema de autenticación de usuario
-            Reseñas.objects.create(libro=libro, usuario=usuario, calificacion=calificacion, comentario=comentario)
+            usuario = request.user  # Usar el usuario autenticado
+            usuario = Usuarios.objects.get(usuarios_id=request.user.id)  # Obtener el usuario actual
+            Reseñas.objects.create(libro_id=libro, usuario_id=usuario, calificacion=calificacion, comentario=comentario)
             return redirect('detalle_libro', libro_id=libro_id)
     else:
         form = ReseñaForm()
 
-    return render(request, 'agregar_resena.html', {'form': form, 'libro': libro})
+    context = {
+        
+        'libro': libro,
+        'form': form,
+    }
+    return render(request, 'agregar_resena.html', context)
 
+@login_required
+def actividades_usuario(request):
+    usuario = request.user  # Usar el usuario autenticado
+    
+    # Obtener las reseñas del usuario ordenados por fecha descendente
+    reseñas_usuario = Reseñas.objects.filter(usuario_id= usuario).order_by('-fecha_reseña')
+    # Obtener los comentarios del usuario ordenados por fecha descendente
+    comentarios_usuario = ComentarioReseña.objects.filter(usuario_id=usuario).order_by('-fecha_comentario')
+    context = {
+        'usuario': usuario,
+        'reseñas_usuario': reseñas_usuario,
+        'comentarios_usuario': comentarios_usuario,
+    }
+    return render(request, 'actividades_usuario.html', context)
 
 
