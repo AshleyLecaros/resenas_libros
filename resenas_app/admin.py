@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Libros, Usuarios, Autores, Genero, Reseñas, ComentarioReseña
+from .models import Libros, Usuarios, Autores, Genero, Reseñas, ComentarioReseña, SeguirAutor, ContactForm
+
 
 
 class UsuariosAdmin(UserAdmin):
@@ -27,5 +28,6 @@ admin.site.register(Autores)
 admin.site.register(Genero)
 admin.site.register(Reseñas)
 admin.site.register(ComentarioReseña)
-# Registrar el modelo Usuarios con el administrador personalizado
-admin.site.register(Usuarios, UsuariosAdmin)
+admin.site.register(Usuarios, UsuariosAdmin)  # Registrar el modelo Usuarios con el administrador personalizado
+admin.site.register(SeguirAutor)
+admin.site.register(ContactForm)

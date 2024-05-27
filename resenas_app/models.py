@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.db.models import Avg
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth import get_user_model
+import uuid
 
 # Gestor de consultas personalizado para Libros
 class LibrosManager(models.Manager):
@@ -126,4 +128,21 @@ class ComentarioReseña(models.Model):
         return f"Comentario de {self.usuario.nombre} en la reseña de {self.reseña.usuario_id.nombre}: {self.comentario}"
     
     
+# Obtener el modelo de usuario personalizado
+User = get_user_model()
 
+# Modelo para gestionar el seguimiento de autores por parte de los usuarios
+class SeguirAutor(models.Model):
+    usuario = models.ForeignKey('Usuarios', on_delete=models.CASCADE, related_name='seguimientos')
+    autor = models.ForeignKey('Autores', on_delete=models.CASCADE, related_name='seguidores')
+    fecha_seguimiento = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return f"{self.usuario.nombre} sigue a {self.autor.nombre} desde {self.fecha_seguimiento}"
+    
+
+class ContactForm(models.Model):
+    contact_form_uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    customer_email = models.EmailField()
+    customer_name = models.CharField(max_length=64)
+    message = models.TextField()

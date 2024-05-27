@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block gestionar_reseñas %}
+<div class="container mt-5">
+    <h2>Gestionar Reseñas</h2>
+
+    <h3>Lista de Reseñas</h3>
+    <ul class="list-group">
+        {% for reseña in reseñas %}
+        <li class="list-group-item">
+            <strong>Libro:</strong> {{ reseña.libro_id.titulo }}<br>
+            <strong>Usuario:</strong> {{ reseña.usuario_id.nombre }}<br>
+            <strong>Calificación:</strong> {{ reseña.calificacion }}<br>
+            <strong>Comentario:</strong> {{ reseña.comentario }}<br>
+            <strong>Fecha:</strong> {{ reseña.fecha_reseña }}<br>
+
+            <!-- Mostrar comentarios -->
+            {% for comentario in reseña.comentarios.all %}
+            <div class="comentario mb-2 border-start border-primary ps-2">
+                {{ comentario.comentario }}
+                <span class="text-muted">- {{ comentario.fecha_comentario|date:"F j, Y, g:i a" }}</span>
+                <a href="?eliminar={{ comentario.id }}" class="btn btn-danger btn-sm ms-2" onclick="return confirm('¿Está seguro de que desea eliminar este comentario?');">Eliminar</a>
+            </div>
+            {% empty %}
+            <div class="mb-2">No hay comentarios para esta reseña.</div>
+            {% endfor %}
+
+        
+
+            
+
+            <!-- Lista de comentarios -->
+            <div class="collapse mt-3" id="comentarios-{{ reseña.id }}">
+                {% for comentario in reseña.comentarios.all %}
+                <div class="comentario mb-2 border-start border-primary ps-2">
+                    {{ comentario.comentario }}
+                    <span class="text-muted">- {{ comentario.fecha_comentario|date:"F j, Y, g:i a" }}</span>
+                    <a href="?eliminar={{ comentario.id }}" class="btn btn-danger btn-sm ms-2" onclick="return confirm('¿Está seguro de que desea eliminar este comentario?');">Eliminar</a>
+                </div>
+                {% empty %}
+                <div class="mb-2">No hay comentarios para esta reseña.</div>
+                {% endfor %}
+            </div>
+
+            <!-- Eliminar reseña -->
+            <a href="?eliminar={{ reseña.id }}" class="btn btn-danger btn-sm mt-2" onclick="return confirm('¿Está seguro de que desea eliminar esta reseña?');">Eliminar Reseña</a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No hay reseñas registradas.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+

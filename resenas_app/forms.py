@@ -1,5 +1,5 @@
 from django import forms
-from .models import Usuarios, Reseñas, ComentarioReseña
+from .models import Usuarios, Reseñas, ComentarioReseña, Libros, Autores
 
 class RegistroUsuarioForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -32,3 +32,28 @@ class ComentarioReseñaForm(forms.ModelForm):
         model = ComentarioReseña
         fields = ['comentario']
         
+
+class ContactFormForm(forms.Form):
+    customer_email = forms.EmailField(label="Correo")
+    customer_name = forms.CharField(max_length=64, label="Nombre")
+    message = forms.CharField(label="Mensaje")
+    
+class LibroForm(forms.ModelForm):
+    class Meta:
+        model = Libros
+        fields = ['titulo', 'descripcion', 'año_publicacion', 'portada_url', 'genero_id', 'autores_id']
+        
+class AutorForm(forms.ModelForm):
+    class Meta:
+        model = Autores
+        fields = ['nombre']
+        
+class UsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuarios
+        fields = ['nombre', 'email', 'password', 'tipo_usuario', 'is_active', 'is_staff']
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
+
+

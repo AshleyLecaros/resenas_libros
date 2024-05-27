@@ -30,11 +30,23 @@
           <li class="nav-item">
             <a class="nav-link active text-black" aria-current="page" href="/">Index</a>
           </li>
+          {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link active text-black" href="about">About</a>
+            <a class="nav-link active text-black" href="libros">Libros</a>
           </li>
+          {% endif %}
+          {% if request.user.is_superuser %}
           <li class="nav-item">
-            <a class="nav-link active text-black" href="/welcome">Welcome</a>
+            <a class="nav-link active text-black" href="{% url 'agregar_libro' %}">Agregar Libro</a>
+          </li>
+          {% endif %}
+          {% if request.user.is_superuser %}
+          <li class="nav-item">
+            <a class="nav-link active text-black" href="{% url 'gestionar_autores' %}">Gestionar</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link active text-black" href="registro_usuario">Regístrate</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active text-black" href="contact">Contact</a>
@@ -56,7 +68,16 @@
     </div>
 </div>
 </nav>
-{% endblock %}
+  {% endblock %}
+
+      <!-- Mostrar mensajes -->
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
         {% block index %}
         {% endblock %}
@@ -85,7 +106,28 @@
         {% block actividades %}
         {% endblock %}
 
+        {% block 'contact' %}
+        {% endblock %}
 
+        {% block agregar_libro %}
+        {% endblock %}
+
+        {% block gestionar_autores %}
+        {% endblock %}
+
+        {% block gestionar_usuarios %}
+        {% endblock %}
+
+        {% block gestionar_reseñas %}
+        {% endblock %}
+
+  <!-- inicio footer -->
+  {% block 'footer' %}
+  <footer class="bg-dark text-center text-light p-4">
+    <p class="mb-0">Desarrollado por Ashley Michell</p>
+  </footer>
+  {% endblock %}
+  <!-- Termino footer -->
 
     <!-- CDN Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

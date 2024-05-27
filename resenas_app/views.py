@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RegistroUsuarioForm, ReseñaForm, ComentarioReseñaForm
+from .forms import RegistroUsuarioForm, ReseñaForm, ComentarioReseñaForm, ContactFormForm, LibroForm, AutorForm, UsuarioForm
 from django.contrib.auth.decorators import login_required
-from .models import Libros, Reseñas, Usuarios, ComentarioReseña, Genero,Autores
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import user_passes_test
+from .models import Libros, Reseñas, Usuarios, ComentarioReseña, Genero,Autores, SeguirAutor, ContactForm
 
 
 # Create your views here.
@@ -133,3 +136,105 @@ def actividades_usuario(request):
         'reseñas_usuario': reseñas_usuario,
         'comentarios_usuario': comentarios_usuario
     })
+
+@login_required  
+def seguir_autor(request, autor_id):
+    autor = get_object_or_404(Autores, pk=autor_id)
+    SeguirAutor.objects.get_or_create(Usuarios, usuario_id=request.user.usuarios_id, autor=autor)
+    messages.success(request, f'Has comenzado a seguir a {autor.nombre}.') # Añadir un mensaje de éxito al contexto de la solicitud.
+    return redirect('detalle_autor', autor_id=autor.id)
+
+@login_required  
+def dejar_seguir(request, autor_id):
+    autor = get_object_or_404(Autores, pk=autor_id)
+    SeguirAutor.objects.filter(Usuarios=request.user.usuario_id, autor=autor).delete() # Eliminar el registro de seguimiento si existe.
+    messages.success(request, f'Has dejado de seguir a {autor_id.nombre}.')
+    
+    return redirect('detalle_autor', autor_id=autor.id)
+
+def contact(request):
+    if request.method == "POST":
+        form = ContactFormForm(request.POST)
+        if form.is_valid():
+            contact_form = ContactForm.objects.create(**form.cleaned_data)
+            return HttpResponseRedirect("index")
+    else:
+        form = ContactFormForm()
+    return render(request, "contact.html", {"form": form})
+
+@user_passes_test(lambda u: u.is_superuser)
+def agregar_libro(request):
+    if request.method == 'POST':
+        form = LibroForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('libros') 
+    else:
+        form = LibroForm()
+    return render(request, 'agregar_libro.html', {'form': form})
+
+@user_passes_test(lambda u: u.is_superuser)
+def gestionar_autores(request):
+    autores = Autores.objects.all()
+    form_autor = AutorForm()
+
+    if request.method == 'POST':
+        form_autor = AutorForm(request.POST)
+        if form_autor.is_valid():
+            form_autor.save()
+            return redirect('gestionar_autores')
+
+    context = {
+        "form_autor": form_autor,
+        "autores": autores,
+    }
+
+    return render(request, 'gestionar_autores.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def gestionar_usuarios(request):
+    usuarios = Usuarios.objects.all()
+    form_usuario = UsuarioForm()
+
+    if request.method == 'POST':
+        form_usuario = UsuarioForm(request.POST)
+        if form_usuario.is_valid():
+            form_usuario.save()
+            return redirect('gestionar_usuarios')
+
+    context = {
+        "form_usuario": form_usuario,
+        "usuarios": usuarios,
+    }
+
+    return render(request, 'gestionar_usuarios.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def gestionar_reseñas(request):
+    reseñas = Reseñas.objects.all()
+    form_reseña = ReseñaForm()
+    form_comentario = ComentarioReseñaForm()
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+
+        if action == 'add_reseña':
+            form_reseña = ReseñaForm(request.POST)
+            if form_reseña.is_valid():
+                form_reseña.save()
+                return redirect('gestionar_reseñas')
+
+        elif action == 'add_comentario':
+            form_comentario = ComentarioReseñaForm(request.POST)
+            if form_comentario.is_valid():
+                form_comentario.save()
+                return redirect('gestionar_reseñas')
+
+    context = {
+        "form_reseña": form_reseña,
+        "form_comentario": form_comentario,
+        "reseñas": reseñas,
+    }
+
+    return render(request, 'gestionar_reseñas.html', context)
+   

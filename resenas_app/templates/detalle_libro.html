@@ -9,10 +9,13 @@
         <div class="col-md-8">
             <h1>{{ libro.titulo }}</h1>
             <h2>Autor: {{ libro.autores_id.nombre }}</h2>
+            
             <p><strong>Año de Publicación:</strong> {{ libro.año_publicacion }}</p>
             <p><strong>Género:</strong> {{ libro.genero_id.nombre }}</p>
             <p><strong>Promedio de Calificación:</strong> {{ promedio_calificaciones }}</p>
             <p>{{ libro.descripcion }}</p>
+
+            
             
             <h3>Reseñas</h3>
             {% if reseñas %}

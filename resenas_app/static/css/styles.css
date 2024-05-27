@@ -4,6 +4,26 @@ body{
 }
 
 .nav-item {
+  font-weight: 600;
+}
+
+.carousel-container {
+    max-width: 1400px; /* Ancho máximo del contenedor */
+    max-height: 200px;
+   
+  }
+
+#myCarousel {
+    width: 100%; /* Ancho completo del carrusel */
+  }
+
+  /* Estilos para las imágenes del carrusel */
+#myCarousel .carousel-item img {
+    max-height: 400px; 
+    width: 100%; 
+    object-fit: cover; /* Cubrir el contenedor manteniendo la proporción */
+  }
+.nav-item {
     font-weight: 600;
 }
 

@@ -6,6 +6,7 @@
 <h2>Reseñas realizadas</h2>
 <ul>
   {% for reseña in reseñas_usuario %}
+    <li>Libro: <strong>{{ reseña.libro_id.titulo }}</strong><br></li>
     <li>Calificación: {{ reseña.calificacion }} - Comentario: {{ reseña.comentario }} - Fecha: {{ reseña.fecha_reseña }}</li>
   {% empty %}
     <li>No hay reseñas realizadas por este usuario.</li>
@@ -15,10 +16,22 @@
 <h2>Comentarios realizados</h2>
 <ul>
   {% for comentario in comentarios_usuario %}
-    <li>{{ comentario.comentario }} - Fecha: {{ comentario.fecha_comentario }}</li>
+    <li> Comentario: {{ comentario.comentario }}<br>
+      Fecha: {{ comentario.fecha_comentario }}<br>
+      Libro: {{ comentario.reseña.libro_id.titulo }}<br>
+      Usuario reseñado: {{ comentario.reseña.usuario_id.nombre }}</li>
   {% empty %}
     <li>No hay comentarios realizados por este usuario.</li>
   {% endfor %}
 </ul>
+
+<h2>Autores seguidos</h2>
+<ul>
+    {% for seguimiento in usuario.seguimientos.all %}
+      <li>{{ seguimiento.autor.nombre }} - Desde: {{ seguimiento.fecha_seguimiento }}</li>
+    {% empty %}
+      <li>No sigues a ningún autor.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}
 
